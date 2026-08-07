@@ -9,7 +9,7 @@ using Conduit.Domain;
 using Conduit.Infrastructure;
 using Conduit.Infrastructure.Errors;
 using FluentValidation;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 
 namespace Conduit.Features.Articles;
@@ -60,7 +60,7 @@ public class Edit
     public class Handler(ConduitContext context, ICurrentUserAccessor currentUserAccessor)
         : IRequestHandler<Command, ArticleEnvelope>
     {
-        public async Task<ArticleEnvelope> Handle(
+        public async ValueTask<ArticleEnvelope> Handle(
             Command message,
             CancellationToken cancellationToken
         )
@@ -125,9 +125,9 @@ public class Edit
             }
 
             // ensure context is tracking any tags that are about to be created so that it won't attempt to insert a duplicate
-            context.Tags.AttachRange(
-                [.. articleTagsToCreate.Where(x => x.Tag is not null).Select(a => a.Tag!)]
-            );
+            context.Tags.AttachRange([
+                .. articleTagsToCreate.Where(x => x.Tag is not null).Select(a => a.Tag!),
+            ]);
 
             // add the new article tags
             await context.ArticleTags.AddRangeAsync(articleTagsToCreate, cancellationToken);

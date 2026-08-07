@@ -4,7 +4,6 @@ using System.Net;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Conduit.Infrastructure;
 using Conduit.Infrastructure.Errors;
 using Conduit.Infrastructure.Security;
@@ -122,7 +121,7 @@ public class Edit
         IPasswordHasher passwordHasher,
         ICurrentUserAccessor currentUserAccessor,
         IJwtTokenGenerator jwtTokenGenerator,
-        IMapper mapper
+        ConduitMapper mapper
     ) : IRequestHandler<Command, UserEnvelope>
     {
         public async Task<UserEnvelope> Handle(Command message, CancellationToken cancellationToken)
@@ -166,7 +165,7 @@ public class Edit
 
             await context.SaveChangesAsync(cancellationToken);
 
-            var user = mapper.Map<Domain.Person, User>(person);
+            var user = mapper.PersonToUser(person);
             user.Token = jwtTokenGenerator.CreateToken(
                 person.Username ?? throw new InvalidOperationException()
             );

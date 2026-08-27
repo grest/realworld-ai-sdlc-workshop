@@ -288,3 +288,15 @@ tools
 *.db-shm
 *.db-wal
 *.db
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Workshop-local Python environment
+.venv-markitdown/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Workshop-local Python environment
+.venv-markitdown/

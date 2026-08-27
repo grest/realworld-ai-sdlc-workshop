@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "autoMemoryEnabled": false,
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "disableAutoMode": "disable",
+    "allow": [
+      "PowerShell(git status)",
+      "PowerShell(git status *)",
+      "PowerShell(git diff *)",
+      "PowerShell(git log *)",
+      "PowerShell(git branch --show-current)",
+      "PowerShell(git submodule status)",
+      "PowerShell(dotnet --version)",
+      "PowerShell(dotnet restore *)",
+      "PowerShell(dotnet build *)",
+      "PowerShell(dotnet test *)",
+      "PowerShell(dotnet run --project build/build.csproj -- test)",
+      "PowerShell(dotnet run --project .\\build\\build.csproj -- test)",
+      "PowerShell(openspec list *)",
+      "PowerShell(openspec status *)",
+      "PowerShell(openspec show *)",
+      "PowerShell(openspec validate *)",
+      "PowerShell(openspec doctor *)"
+    ],
+    "ask": [
+      "PowerShell(git commit *)",
+      "PowerShell(git switch *)",
+      "PowerShell(dotnet run --project src/Conduit/Conduit.csproj *)",
+      "PowerShell(dotnet run --project .\\src\\Conduit\\Conduit.csproj *)",
+      "PowerShell(openspec update *)"
+    ],
+    "deny": [
+      "Read(/.env)",
+      "Read(/.env.*)",
+      "Read(**/secrets/**)",
+      "Edit(/realworld/**)",
+      "Edit(/.github/workflows/**)",
+      "Edit(/global.json)",
+      "Edit(/Directory.Packages.props)",
+      "PowerShell(git push *)",
+      "PowerShell(git reset --hard *)",
+      "PowerShell(git clean *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(dotnet add package *)",
+      "PowerShell(dotnet ef database update *)",
+      "PowerShell(dotnet ef migrations *)",
+      "PowerShell(npm install *)",
+      "PowerShell(npm uninstall *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|PowerShell|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-workshop-files.ps1"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

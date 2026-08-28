@@ -173,9 +173,9 @@ Przeanalizuj:
 - @docs/converted/BRD-COM-017.raw.md
 - @docs/requirements/comment-correction-source-review.md
 - @docs/source-materials/ADO-COM-042-backlog-item.md
-- @docs/source-materials/ADR-006-deterministic-time-handling.md
+- @docs/adr/ADR-006-deterministic-time-handling.md
 - @docs/source-materials/SEC-STD-004-resource-ownership.md
-- @docs/source-materials/NFR-OBS-003-logging-and-audit.md
+- @docs/standards/observability/NFR-OBS-003-logging-and-audit.md
 - @docs/source-materials/SUP-INC-010-support-case.md
 - @docs/architecture/comment-flow-review.md
 
